@@ -1,13 +1,13 @@
 import { loadStdlib } from '@reach-sh/stdlib';
 import * as backend from './build/index.main.mjs';
-const stdlib = loadStdlib();
+const stdlib = loadStdlib(process.env);
 
 const startingBalance = stdlib.parseCurrency(100);
 const accountAlice = await stdlib.newTestAccount(startingBalance);
 const accountBob = await stdlib.newTestAccount(startingBalance);
 
 const ctcAlice = accountAlice.contract(backend);
-const ctcBob = accountBob.contract(backend)
+const ctcBob = accountBob.contract(backend, ctcAlice.getInfo());
 
 const HAND = ['Rock', 'Paper', 'Scissors'];
 const OUTCOME = ['Bob wins', 'Draw', 'Alice wins'];
